@@ -19,7 +19,8 @@ def allocation_plan(m_group, num_values):
     return res
 
 def eigenvalue_allocation(values, plan):
-    return tf.gather(tf.argsort(values), plan)
+    _, top_indices = tf.nn.top_k(values, len(plan))
+    return tf.gather(top_indices, plan)
 
 def local_rotation(df, covariance_column, num_feature):
     with tf.Graph().as_default():
